@@ -43,7 +43,7 @@ var node, grp, band int
 var astx bool
 var (
 	rf12msg struct {
-		ID   [2]int `json:"id"`
+		ID   [3]int `json:"id"`
 		Dev  string `json:"dev"`
 		Loc  string `json:"loc"`
 		Text string `json:"text"`
@@ -63,6 +63,7 @@ func (s *RF12demoDecodeService) Handle(m *jeebus.Message) {
 		var vals []string
 		vals = strings.Split(text[3:], " ")
 		rnode , err := strconv.Atoi(vals[0])
+		rnode &= 0x1F
 		check(err)
 		// convert the line of decimal byte values to a byte buffer
 		for _, v := range vals {
@@ -74,12 +75,13 @@ func (s *RF12demoDecodeService) Handle(m *jeebus.Message) {
 		dev := strings.SplitN(m.T, "/", 2)[1]
 		hex := fmt.Sprintf("%X", buf.Bytes())
 		fmt.Printf("%d %s %s\n", now, dev, hex)
-		rf12msg.ID[0] = 178
-		rf12msg.ID[1] = 22
+		rf12msg.ID[0] = band
+		rf12msg.ID[1] = grp
+		rf12msg.ID[2] = rnode
 		rf12msg.Dev = dev
 		rf12msg.Text = hex
 		rf12msg.Time = now
-		if found, nT, nL := drivers.JNodeType(grp, rnode, now); found {
+		if found, nT, nL := drivers.JNodeType(band, grp, rnode, now); found {
 			rf12msg.Loc = nL
 			jeebus.Publish("rf12/"+nT, rf12msg)
 		} else {

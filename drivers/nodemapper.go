@@ -2,7 +2,6 @@ package drivers
 
 import (
 	"fmt"
-	"log"
 	"encoding/json"
 	"os"
 )
@@ -30,8 +29,10 @@ func jNodeMap() {
 	//fmt.Printf("Results: %v\n", nMap)
 }
 
-func JNodeType(G, N int, TS int64) (bool, string, string) {
+func JNodeType(B, G, N int, TS int64) (bool, string, string) {
 	for _, node := range nMap.NodeMap {
+		//TODO: Add band in identification check
+		B += 0
 		if node.G == G && node.N == N && TS >= node.Ts && (TS < node.Te || node.Te <= node.Ts) {
 			fmt.Println("found rf12 node: ", node.Type)
 			return true, node.Type, node.Name
@@ -39,12 +40,6 @@ func JNodeType(G, N int, TS int64) (bool, string, string) {
 		}
 	}
 	return false, "", ""
-}
-
-func check(err error) {
-	if err != nil {
-		log.Fatal(err)
-	}
 }
 
 func init() {
