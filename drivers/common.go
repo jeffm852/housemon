@@ -10,7 +10,9 @@ import (
 var client *jeebus.Client
 
 func register(nT string, decoder jeebus.Service) {
-	client = jeebus.NewClient()
+	if client == nil {
+		client = jeebus.NewClient()
+	}
 	client.Register("rf12/"+nT+"/#", decoder)
 }
 
@@ -20,7 +22,7 @@ func publish(nT string, v interface{}, m *jeebus.Message) {
 	b, err := json.Marshal(v)
 	check(err)
 	var im map[string]interface{}
-	err = json.Unmarshal(b, &f)
+	err = json.Unmarshal(b, &im)
 	check(err)
 	var vm = map[string]interface{} {"value": ""}
 
