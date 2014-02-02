@@ -21,8 +21,8 @@ func main() {
 	switch os.Args[1] {
 
 	case "decode":
-		rdClient := jeebus.NewClient("rd")
-		rdClient.Register("RF12demo/#", &RF12demoDecodeService{})
+		client := jeebus.NewClient()
+		client.Register("rd/RF12demo/#", &RF12demoDecodeService{})
 
 		//drivers.JNodeMap()
 		msg := map[string]interface{}{"text": "v"}
@@ -72,7 +72,7 @@ func (s *RF12demoDecodeService) Handle(m *jeebus.Message) {
 			buf.WriteByte(byte(n))
 		}
 		now := m.GetInt64("time")
-		dev := strings.SplitN(m.T, "/", 2)[1]
+		dev := strings.SplitN(m.T, "/", 3)[2]
 		hex := fmt.Sprintf("%X", buf.Bytes())
 		fmt.Printf("%d %s %s\n", now, dev, hex)
 		rf12msg.ID[0] = band
