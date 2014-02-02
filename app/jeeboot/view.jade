@@ -2,26 +2,31 @@
   .large-12.columns
     h1 JeeBoot
 
-    h3 Firmware
-    table
-      tr
-        th SwID
-        th File
-      tr(ng-repeat='(swid,row) in firmware')
-        td {{ swid }}
-        td {{ row.file }}
+    .row
+      .large-4.columns
+        h3 Firmware
+        table
+          tr
+            th SwID
+            th File
+          tr(ng-repeat='(swid,row) in firmware')
+            td {{ swid }}
+            td {{ row.file }}
 
-    h3 Hardware ID's
-    table
-      tr
-        th HwID
-        th Board
-        th Group
-        th Node
-        th SwID
-      tr(ng-repeat='(hwid,row) in hwid')
-        td {{ hwid }}
-        td {{ row.board }}
-        td {{ row.group }}
-        td {{ row.node }}
-        td {{ row.swid }}
+        p.drop-box(ng-file-drop='onFileDrop($files)') To upload, drop file here
+
+      .large-8.columns
+        h3 Hardware ID's
+        table
+          tr
+            th HwID
+            th Board
+            th Group
+            th Node
+            th SwID
+          tr(ng-repeat='(hwid,row) in hwid')
+            td {{ hwid }}
+            td {{ row.board }}
+            td {{ row.group }}
+            td {{ row.node }}
+            td {{ row.swid }}

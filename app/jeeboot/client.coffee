@@ -17,3 +17,27 @@ ng.controller 'JeeBootCtrl', ($scope, $timeout, jeebus) ->
     $scope.firmware = jeebus.attach '/jeeboot/firmware/'
     $scope.$on '$destroy', -> jeebus.detach '/jeeboot/firmware/'
   , 100
+
+  $scope.onFileDrop = (x) ->
+    console.log f  for f in x
+
+# see also github.com/danialfarid/angular-file-upload
+ng.directive 'ngFileDrop', ($parse) ->
+  link: (scope, elem, attr) ->
+
+    elem[0].addEventListener 'dragover', (evt) ->
+      evt.stopPropagation()
+      evt.preventDefault()
+      elem.addClass 'dragActive'
+
+    elem[0].addEventListener 'dragleave', (evt) ->
+      elem.removeClass 'dragActive'
+
+    elem[0].addEventListener 'drop', (evt) ->
+      evt.stopPropagation()
+      evt.preventDefault()
+      elem.removeClass 'dragActive'
+
+      fn = $parse attr['ngFileDrop']
+      fl = (x for x in evt.dataTransfer.files)
+      fn scope, $files: fl, $event: evt
