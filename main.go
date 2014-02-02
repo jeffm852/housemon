@@ -13,8 +13,6 @@ import (
 	"github.com/jcw/housemon/drivers"
 )
 
-var client *jeebus.Client
-
 func main() {
 	if len(os.Args) <= 1 {
 		log.Fatalf("usage: housemon <cmd> ...")
@@ -23,8 +21,8 @@ func main() {
 	switch os.Args[1] {
 
 	case "decode":
-		client = jeebus.NewClient()
-		client.Register("rd/RF12demo/#", &RF12demoDecodeService{})
+		client := jeebus.NewClient()
+		client.Register("rd/RF12demo/#", &RF12demoDecodeService{client})
 
 		//drivers.JNodeMap()
 		msg := map[string]interface{}{"text": "v"}
@@ -54,6 +52,7 @@ var (
 var confRegex = regexp.MustCompile(`^ [A-Z[\\\]\^_@] i(\d+)(\*)? g(\d+) @ (\d\d\d) MHz`)
 
 type RF12demoDecodeService struct {
+	client *jeebus.Client
 }
 
 func (s *RF12demoDecodeService) Handle(m *jeebus.Message) {
@@ -84,9 +83,9 @@ func (s *RF12demoDecodeService) Handle(m *jeebus.Message) {
 		rf12msg.Time = now
 		if found, nT, nL := drivers.JNodeType(band, grp, rnode, now); found {
 			rf12msg.Loc = nL
-			client.Publish("rf12/"+nT, rf12msg)
+			s.client.Publish("rf12/"+nT, rf12msg)
 		} else {
-			client.Publish("rf12/unknown", rf12msg)
+			s.client.Publish("rf12/unknown", rf12msg)
 		}
 	} else if conf := confRegex.FindStringSubmatch(text); conf != nil {
 		node, _ = strconv.Atoi(conf[1])
