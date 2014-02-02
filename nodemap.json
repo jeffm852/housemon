@@ -1,14 +1,14 @@
 { "NodeMap" : [ 
       { "G" : 5,
         "N" : 2,
-        "Name" : "boekenkast_JC",
+        "Name" : "boekenkast-JC",
         "Te" : -1,
         "Ts" : 0,
         "Type" : "roomnode"
       },
       { "G" : 5,
         "N" : 3,
-        "Name" : "buro_JC",
+        "Name" : "buro-JC",
         "Te" : -1,
         "Ts" : 0,
         "Type" : "radioblip"
@@ -29,7 +29,7 @@
       },
       { "G" : 5,
         "N" : 6,
-        "Name" : "hal_vloer",
+        "Name" : "hal-vloer",
         "Te" : -1,
         "Ts" : 0,
         "Type" : "roomnode"
