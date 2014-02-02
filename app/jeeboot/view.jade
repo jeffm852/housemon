@@ -2,10 +2,26 @@
   .large-12.columns
     h1 JeeBoot
 
-    table(cellpadding=10)
+    h3 Firmware
+    table
       tr
-        td
-          button(ng-click='echoTest()') RPC Echo
+        th SwID
+        th File
+      tr(ng-repeat='(swid,row) in firmware')
+        td {{ swid }}
+        td {{ row.file }}
+
+    h3 Hardware ID's
+    table
       tr
-        td(colspan=1)
-          | {{ message }} &nbsp;
+        th HwID
+        th Board
+        th Group
+        th Node
+        th SwID
+      tr(ng-repeat='(hwid,row) in hwid')
+        td {{ hwid }}
+        td {{ row.board }}
+        td {{ row.group }}
+        td {{ row.node }}
+        td {{ row.swid }}
