@@ -14,7 +14,7 @@
     "node": ">= 0.10"
   },
   "dependencies": {
-    "primus-live": "~0.3.7"
+    "primus-live": "~0.3.9"
   },
   "devDependencies": {
     "chai": "~1.8.1",
