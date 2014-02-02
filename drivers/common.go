@@ -7,9 +7,11 @@ import (
 	"github.com/jcw/jeebus"
 )
 
+var client *jeebus.Client
+
 func register(nT string, decoder jeebus.Service) {
-	rf12Client := jeebus.NewClient("rf12")
-	rf12Client.Register(nT+"/#", decoder)
+	client = jeebus.NewClient()
+	client.Register("rf12/"+nT+"/#", decoder)
 }
 
 func publish(nT string, v interface{}, m *jeebus.Message) {
@@ -29,7 +31,7 @@ func publish(nT string, v interface{}, m *jeebus.Message) {
 		check(err)
 		topic := "/hm/" + m.Get("loc") + "/" + nT + "/" + property
 		//topic += "/" + strconv.FormatInt(m.GetInt64("time"), 10)
-		jeebus.Publish(topic, val)
+		client.Publish(topic, val)
 	}
 }
 
