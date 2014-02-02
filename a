@@ -1,0 +1,37 @@
+{
+  "/jeeboot/": {
+    "firmware/1004": {
+      "file": "blinkAvr1.hex"
+    },
+    "firmware/1000": {
+      "file": "aaa.txt"
+    },
+    "firmware/1001": {
+      "file": "blinkArm2.hex"
+    },
+    "firmware/1002": {
+      "file": "blinkArm2a.hex"
+    },
+    "firmware/1005": {
+      "file": "bbb.txt"
+    },
+    "hwid/00000000000000000000000000000000": {
+      "board": 1,
+      "group": "RF12-212",
+      "node": 16,
+      "swid": 1004
+    },
+    "hwid/06300301c48461aeedb09351061900f5": {
+      "board": 2,
+      "group": "RF12-212",
+      "node": 17,
+      "swid": 1001
+    },
+    "hwid/35800405648861aee3e5ba50800200f5": {
+      "board": 2,
+      "group": "RF12-212",
+      "node": 18,
+      "swid": 1002
+    }
+  }
+}

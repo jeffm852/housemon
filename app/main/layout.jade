@@ -36,15 +36,6 @@ html(lang='en')
 
     div(ui-view)
 
-    .row
-      .large-3.columns
-        p.secondary.label
-          | Version 
-          span(app-version)
-      .large-3.columns
-        .label Conn: {{serverConnection}}
-        .secondary.label @ {{ serverTick | date:'HH:mm:ss' }}
-
     block scripts
       script.
         console.log('layout: MYAPP');

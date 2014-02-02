@@ -12,6 +12,7 @@
           tr(ng-repeat='(swid,row) in firmware')
             td {{ swid }}
             td {{ row.file }}
+            td: a(ng-click='fwDel(swid)') x
 
         p.drop-box(ng-file-drop='onFileDrop($files)') To upload, drop file here
 
