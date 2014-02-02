@@ -19,7 +19,13 @@ ng.controller 'JeeBootCtrl', ($scope, $timeout, jeebus) ->
   , 100
 
   $scope.onFileDrop = (x) ->
-    console.log f  for f in x
+    lastId = Object.keys($scope.firmware).sort().pop() | 0
+    for f in x
+      r = new FileReader()
+      r.onload = (e) ->
+        jeebus.rpc 'savefile', "firmware/#{f.name}", e.target.result
+        jeebus.store "/jeeboot/firmware/#{++lastId}", file: f.name
+      r.readAsText f
 
 # see also github.com/danialfarid/angular-file-upload
 ng.directive 'ngFileDrop', ($parse) ->
