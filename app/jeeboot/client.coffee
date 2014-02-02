@@ -31,8 +31,24 @@ ng.controller 'JeeBootCtrl', ($scope, $timeout, jeebus) ->
   $scope.fwDel = (swid) ->
     jeebus.store "/jeeboot/firmware/#{swid}"
 
+  $scope.hwSave = (id, field, value) ->
+    row = $scope.hwid[id]
+    row[field] = value
+    jeebus.store "/jeeboot/hwid/#{id}", row
+
+# see http://docs.angularjs.org/guide/forms
+ng.directive 'contenteditable', ($parse) ->
+  restrict: 'A'
+  link: (scope, elm, attr) ->
+    if attr.onBlur
+      elm.on 'blur', ->
+        scope.$apply ->
+          fn = $parse attr.onBlur
+          fn scope, $value: elm.text()
+
 # see also github.com/danialfarid/angular-file-upload
-ng.directive 'ngFileDrop', ($parse) ->
+ng.directive 'onFileDrop', ($parse) ->
+  restrict: 'A'
   link: (scope, elem, attr) ->
 
     elem[0].addEventListener 'dragover', (evt) ->
@@ -48,6 +64,6 @@ ng.directive 'ngFileDrop', ($parse) ->
       evt.preventDefault()
       elem.removeClass 'dragActive'
 
-      fn = $parse attr['ngFileDrop']
+      fn = $parse attr.onFileDrop
       fl = (x for x in evt.dataTransfer.files)
       fn scope, $files: fl, $event: evt
