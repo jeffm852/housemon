@@ -19,10 +19,9 @@ func publish(nT string, v interface{}, m *jeebus.Message) {
 	//var b []byte
 	b, err := json.Marshal(v)
 	check(err)
-	var f interface{}
+	var im map[string]interface{}
 	err = json.Unmarshal(b, &f)
 	check(err)
-	im := f.(map[string]interface{})
 	var vm = map[string]interface{} {"value": ""}
 
 	for property, v := range im {

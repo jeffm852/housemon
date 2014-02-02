@@ -2,19 +2,19 @@ package drivers
 
 import (
 	"bytes"
-	"encoding/hex"
 	"encoding/binary"
+	"encoding/hex"
 
 	"github.com/jcw/jeebus"
 )
 
 type BaroNode struct {
 	//match input data
-	NID       uint8        `json:"-"`
-	Seq       uint8        `json:"seq,omitempty"`
-	MsgT      uint8        `json:"-"`
-	Temp      uint16       `json:"temp"`
-	Pres      uint32       `json:"pres"`
+	NID  uint8  `json:"-"`
+	Seq  uint8  `json:"seq,omitempty"`
+	MsgT uint8  `json:"-"`
+	Temp uint16 `json:"temp"`
+	Pres uint32 `json:"pres"`
 }
 
 type BaroNodeDecoder struct {
