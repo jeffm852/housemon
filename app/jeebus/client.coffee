@@ -16,7 +16,7 @@ ng.controller 'JeeBusCtrl', ($scope, jeebus) ->
       $scope.message = r
 
   $scope.dbGetTest = ->
-    jeebus.rpc('db-get', '/admin/started').then (r) ->
+    jeebus.rpc('db-get', '/jeebus/started').then (r) ->
       $scope.message = r
 
   $scope.dbKeysTest = ->
