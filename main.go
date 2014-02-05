@@ -21,7 +21,7 @@ func main() {
 	switch os.Args[1] {
 
 	case "decode":
-		client := jeebus.NewClient()
+		client := jeebus.NewClient(nil)
 		client.Register("rd/RF12demo/#", &RF12demoDecodeService{client})
 
 		//drivers.JNodeMap()

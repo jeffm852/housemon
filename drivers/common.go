@@ -11,7 +11,7 @@ var client *jeebus.Client
 
 func register(nT string, decoder jeebus.Service) {
 	if client == nil {
-		client = jeebus.NewClient()
+		client = jeebus.NewClient(nil)
 	}
 	client.Register("rf12/"+nT+"/#", decoder)
 }
