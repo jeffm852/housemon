@@ -4,7 +4,8 @@ import (
 	"bytes"
 	"fmt"
 	"log"
-	"os"
+	"flag"
+	"net/url"
 	"strconv"
 	"strings"
 	"regexp"
@@ -14,28 +15,28 @@ import (
 )
 
 func main() {
-	if len(os.Args) <= 1 {
-		log.Fatalf("usage: housemon <cmd> ...")
+	var mqttAddr string
+
+	flag.StringVar(&mqttAddr, "mqtt", ":1883",
+		"connect to MQTT server on <host><:port>")
+	flag.Parse()
+
+	if !strings.Contains(mqttAddr, "://") {
+		mqttAddr = "tcp://" + mqttAddr
 	}
+	murl, err := url.Parse(mqttAddr)
+	check(err)
 
-	switch os.Args[1] {
+	client := jeebus.NewClient(murl)
+	client.Register("rd/RF12demo/#", &RF12demoDecodeService{client})
 
-	case "decode":
-		client := jeebus.NewClient(nil)
-		client.Register("rd/RF12demo/#", &RF12demoDecodeService{client})
+	//drivers.JNodeMap()
+	// FIXME this should be a startup setting when RF12demo connects
+	msg := map[string]interface{}{"text": "v c"} // TODO omit "c" ?
+	client.Publish("if/RF12demo", msg)
+	//"text":" A i1 g178 @ 868 MHz "
 
-		//drivers.JNodeMap()
-		msg := map[string]interface{}{"text": "v"}
-		client.Publish("if/RF12demo", msg)
-		msg = map[string]interface{}{"text": "c"}
-		client.Publish("if/RF12demo", msg)
-		//"text":" A i1 g178 @ 868 MHz "
-
-		<- client.Done
-
-	default:
-		log.Fatal("unknown sub-command: housemon ", os.Args[1], " ...")
-	}
+	<- client.Done
 }
 
 var node, grp, band int
