@@ -36,7 +36,7 @@ ng.controller 'JeeBootCtrl', ($scope, $timeout, jeebus) ->
 
   $scope.hwSave = (id, field, value) ->
     row = $scope.hwid[id]
-    row[field] = value
+    row[field] = value | 0 # TODO hard-coded int conversion
     jeebus.store "/jeeboot/hwid/#{id}", row
 
 # see http://docs.angularjs.org/guide/forms
