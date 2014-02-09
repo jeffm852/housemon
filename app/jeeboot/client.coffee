@@ -14,25 +14,26 @@ ng.controller 'JeeBootCtrl', ($scope, $timeout, jeebus) ->
   $timeout ->
     $scope.hwid = jeebus.attach '/jeeboot/hwid/'
     $scope.$on '$destroy', -> jeebus.detach '/jeeboot/hwid/'
-    $scope.firmware = jeebus.attach '/jeeboot/firmware/'
-    $scope.$on '$destroy', -> jeebus.detach '/jeeboot/firmware/'
+    $scope.swid = jeebus.attach '/jeeboot/swid/'
+    $scope.$on '$destroy', -> jeebus.detach '/jeeboot/swid/'
   , 100
 
   $scope.onFileDrop = (x) ->
-    lastId = Object.keys($scope.firmware).sort().pop() | 0
+    lastId = Object.keys($scope.swid).sort().pop() | 0
     lastId = 999  if lastId < 999
     for f in x
       r = new FileReader()
       r.onload = (e) ->
+        jeebus.store "/jeeboot/swid/#{++lastId}", file: f.name
         jeebus.rpc 'savefile', "firmware/#{f.name}", e.target.result
-        jeebus.store "/jeeboot/firmware/#{++lastId}", file: f.name
       r.readAsText f
 
   $scope.fwDel = (swid) ->
-    jeebus.store "/jeeboot/firmware/#{swid}"
+    jeebus.store "/jeeboot/swid/#{swid}"
 
   $scope.hwDel = (hwid) ->
     jeebus.store "/jeeboot/hwid/#{hwid}"
+    jeebus.rpc 'savefile', "firmware/#{f.name}"
 
   $scope.hwSave = (id, field, value) ->
     row = $scope.hwid[id]
