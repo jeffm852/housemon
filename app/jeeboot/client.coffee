@@ -31,6 +31,9 @@ ng.controller 'JeeBootCtrl', ($scope, $timeout, jeebus) ->
   $scope.fwDel = (swid) ->
     jeebus.store "/jeeboot/firmware/#{swid}"
 
+  $scope.hwDel = (hwid) ->
+    jeebus.store "/jeeboot/hwid/#{hwid}"
+
   $scope.hwSave = (id, field, value) ->
     row = $scope.hwid[id]
     row[field] = value

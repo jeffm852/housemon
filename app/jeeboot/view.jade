@@ -35,6 +35,7 @@
               | {{ row.node }}
             td(contentEditable='true',on-blur='hwSave(hwid,"swid",$value)')
               | {{ row.swid }}
+            td: a(ng-click='hwDel(hwid)') x
 
 style(type='text/css').
   div[contentEditable] {
