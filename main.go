@@ -32,8 +32,8 @@ func main() {
 
 	//drivers.JNodeMap()
 	// FIXME this should be a startup setting when RF12demo connects
-	msg := map[string]interface{}{"text": "v c"} // TODO omit "c" ?
-	client.Publish("if/RF12demo", msg)
+	msg := map[string]interface{}{"text": "v c"} // TODO: omit "c" ?
+	client.Publish("io/RF12demo", msg)
 	//"text":" A i1 g178 @ 868 MHz "
 
 	<- client.Done
@@ -50,7 +50,7 @@ var (
 		Time int64  `json:"time"`
 	}
 )
-var confRegex = regexp.MustCompile(`^ [A-Z[\\\]\^_@] i(\d+)(\*)? g(\d+) @ (\d\d\d) MHz`)
+var confRegex = regexp.MustCompile(`^ [@-_] i(\d+)(\*)? g(\d+) @ (\d\d\d) MHz`)
 
 type RF12demoDecodeService struct {
 	client *jeebus.Client
