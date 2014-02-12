@@ -81,7 +81,8 @@ func (s *RF12demoDecodeService) Handle(m *jeebus.Message) {
 
 	keys := strings.Split(m.T,"/")
 	rwTopic := strings.Join( keys[:len(keys)-1], "/")
-	text := m.Get("text")
+	timestamp := keys[len(keys)-1:][0]
+	text := string(m.P)
 
 	inst,ok := s.Db[rwTopic]
 	if !ok  {
@@ -121,7 +122,9 @@ func (s *RF12demoDecodeService) Handle(m *jeebus.Message) {
 			check(err)
 			buf.WriteByte(byte(n))
 		}
-		now := m.GetInt64("time")
+		var now int64
+		now,err  = strconv.ParseInt(string(timestamp),10,64)
+
 		inst.Dev = rwTopic   //we can simply use the endpoint minus the timestamp instead of strings.SplitN(m.T, "/", 3)[2]
 		hex := fmt.Sprintf("%X", buf.Bytes())
 
