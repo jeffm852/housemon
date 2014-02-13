@@ -14,7 +14,6 @@ import (
 
 	"github.com/jcw/jeebus"
 	"github.com/jcw/housemon/drivers"
-	"time"
 )
 
 //TODO: This is a quick fix update/upgrade to get RF12demo decoder working with registry system
@@ -81,6 +80,7 @@ func (s *RF12demoDecodeService) Handle(m *jeebus.Message) {
 
 	keys := strings.Split(m.T,"/")
 	rwTopic := strings.Join( keys[:len(keys)-1], "/")
+	log.Print(rwTopic)
 	timestamp := keys[len(keys)-1:][0]
 	text := string(m.P)
 
@@ -96,10 +96,7 @@ func (s *RF12demoDecodeService) Handle(m *jeebus.Message) {
 		//TODO: put this on watchdog timer
 		s.ConfigFlag[rwTopic] = true
 		//TODO: direct clone of prev code - only directed to specific 'instance' of rf12demo.
-		msg := map[string]interface{}{"text": "c"}
-		s.client.Publish(rwTopic, msg)
-		<-time.After(50 * time.Millisecond ) //Added to help sketch
-		msg = map[string]interface{}{"text": "v"}
+		msg := map[string]interface{}{"text": "c 0x v"}
 		s.client.Publish(rwTopic, msg)
 
 	}
