@@ -61,7 +61,7 @@ setupDatabase = (path) ->
   db
 
 module.exports = (app, plugin) ->
-  app.db = setupDatabase './storage'
+  app.db = setupDatabase './storage-old'
 
   # generate "top-level" events for changes, so that we can hook in per-prefix
   emitOnPrefix = (key, value) ->

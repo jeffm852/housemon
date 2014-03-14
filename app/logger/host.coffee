@@ -1,7 +1,7 @@
 stream = require 'stream'
 fs = require 'fs'
 
-LOGGER_PATH = './logger'
+LOGGER_PATH = './logger-old'
 
 mkdir = (path) ->
   unless fs.existsSync path

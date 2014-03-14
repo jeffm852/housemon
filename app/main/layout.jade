@@ -36,20 +36,14 @@ html(lang='en')
 
     div(ui-view)
 
-    .row
-      .large-3.columns
-        p.secondary.label
-          | Version 
-          span(app-version)
-      .large-3.columns
-        .label Conn: {{serverConnection}}
-        .secondary.label @ {{ serverTick | date:'HH:mm:ss' }}
-
     block scripts
       script.
         console.log('layout: MYAPP');
         angular.module('myApp', ['ui.router', 'ngAnimate']);
       script(src='/primus/primus.js')
+      script.
+        console.log('layout: JEEBUS');
+      script(src='/jeebus/jeebus.js')
       script.
         console.log('layout: BOOT');
         angular.module('myApp').constant('primus', new Primus);

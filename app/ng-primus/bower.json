@@ -1,7 +1,6 @@
 {
   "name": "ng-primus",
   "dependencies": {
-    "angular-ui-router": "~0.2.0",
     "angular-animate": "~1.2.0"
   }
 }

@@ -2,7 +2,7 @@ ng = angular.module 'myApp'
 
 ng.value 'appInfo',
   name: 'HouseMon'
-  version: '0.8.0'
+  version: '0.9.0'
   home: 'https://github.com/jcw/housemon'
 
 ng.provider 'navbar', ->
